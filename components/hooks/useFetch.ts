@@ -56,6 +56,8 @@ export function useFetch<T>(
     return () => {
       controller.abort();
     };
-  }, [url, JSON.stringify(options), transform]);
+  }
+  )
+
   return { data, loading, error };
 }

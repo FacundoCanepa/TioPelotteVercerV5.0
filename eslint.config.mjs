@@ -22,7 +22,11 @@ const eslintConfig = [
       "react-hooks/exhaustive-deps": "warn",
       "@next/next/no-img-element": "off",
       "react/no-unescaped-entities": "off",
-      "@typescript-eslint/ban-ts-comment": "warn"
+      "@typescript-eslint/ban-ts-comment": "warn",
+      "prefer-const": "error",
+      "no-console": ["warn", { "allow": ["warn", "error"] }],
+      "@typescript-eslint/no-unused-expressions": "warn",
+      "react-hooks/rules-of-hooks": "error"
     }
   }
 ];

@@ -14,8 +14,6 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-
-
     const {
       id,
       documentId,
@@ -57,7 +55,6 @@ export async function POST(req: NextRequest) {
     const json = await res.json();
     return NextResponse.json(json, { status: res.status });
   } catch (err) {
-    console.error("❌ Error interno al crear producto:", err);
     return NextResponse.json({ error: "Error interno" }, { status: 500 });
   }
 }

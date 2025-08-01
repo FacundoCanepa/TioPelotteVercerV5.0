@@ -16,14 +16,15 @@ const ProductGridCard = ({ product }: Props) => {
   const router = useRouter();
   const addToCart = useCartStore((state) => state.addToCart);
 
-  if (!product?.productName) return null;
-
   const unidad = product.unidadMedida?.trim().toLowerCase() || "";
   const isByWeight = unidad === "kg";
   const step = isByWeight ? 0.25 : 1;
   const min = isByWeight ? 0.25 : 1;
 
   const [quantity, setQuantity] = useState<number>(min);
+
+  // Early return after hooks to avoid conditional hook calls
+  if (!product?.productName) return null;
 
   const toFixedStep = (val: number) => Math.round(val * 100) / 100;
 

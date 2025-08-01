@@ -47,8 +47,6 @@ export async function POST(req: Request) {
     };
     const baseUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
-    console.log("🌐 baseUrl:", baseUrl);
-
     const { id, init_point } = await new Preference(mp).create({
       body: {
         items: itemsProcesados,
@@ -66,9 +64,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ id, url: init_point });
   } catch (error) {
-    console.error("❌ Error al crear preferencia:", error);
     return NextResponse.json(
-      { error: "Error al crear preferencia", detalle: error },
+      { error: "Error al crear preferencia" },
       { status: 500 }
     );
   }

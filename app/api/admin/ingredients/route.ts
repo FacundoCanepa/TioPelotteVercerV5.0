@@ -21,7 +21,6 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    console.log("📥 POST recibido body:", body);
 
     const data = {
       ingredienteName: body.ingredienteName,
@@ -40,10 +39,8 @@ export async function POST(req: NextRequest) {
     });
 
     const json = await res.json();
-    console.log("✅ Respuesta POST ingredientes:", json);
     return NextResponse.json(json, { status: res.status });
   } catch (error) {
-    console.error("🔥 Error en POST ingredientes:", error);
     return NextResponse.json(
       { error: "Error interno del servidor" },
       { status: 500 }

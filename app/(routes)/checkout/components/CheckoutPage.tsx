@@ -70,7 +70,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     setTotal(totalGeneral);
-  }, [totalGeneral]);
+  }, [totalGeneral, setTotal]);
     const handleConfirmRetiro = async () => {
 
       const payload = {

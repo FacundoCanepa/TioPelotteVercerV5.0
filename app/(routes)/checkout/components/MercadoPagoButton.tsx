@@ -63,7 +63,8 @@ export default function MercadoPagoButton({ total }: Props) {
       } else {
         alert("Error al generar pago");
       }
-    } catch (err) {
+    } catch {
+      alert("Error al procesar el pago");
     }
   };
 

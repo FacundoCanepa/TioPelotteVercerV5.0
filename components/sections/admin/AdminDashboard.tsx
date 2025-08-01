@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import BestSellingProducts from "./BestSellingProducts";
 import { useEffect, useState } from "react";
 import {
@@ -53,7 +54,7 @@ export default function AdminDashboard() {
       try {
         const res = await fetch("/api/pedidos?populate=*");
         const json = await res.json();
-setPedidos(Array.isArray(json?.data) ? json.data : []);
+        setPedidos(Array.isArray(json?.data) ? json.data : []);
 
       } catch (err) {
         console.error("Error al obtener pedidos:", err);
@@ -75,19 +76,23 @@ setPedidos(Array.isArray(json?.data) ? json.data : []);
     );
   });
 
-  let pedidosOrdenados = [...pedidosFiltrados];
+  const pedidosOrdenados = useMemo(() => {
+    let ordenados = [...pedidosFiltrados];
 
-  if (ordenFecha === "recientes") {
-    pedidosOrdenados.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-  } else if (ordenFecha === "antiguos") {
-    pedidosOrdenados.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-  }
+    if (ordenFecha === "recientes") {
+      ordenados.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else if (ordenFecha === "antiguos") {
+      ordenados.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    }
 
-  if (ordenPrecio === "mayor") {
-    pedidosOrdenados.sort((a, b) => b.total - a.total);
-  } else if (ordenPrecio === "menor") {
-    pedidosOrdenados.sort((a, b) => a.total - b.total);
-  }
+    if (ordenPrecio === "mayor") {
+      ordenados.sort((a, b) => b.total - a.total);
+    } else if (ordenPrecio === "menor") {
+      ordenados.sort((a, b) => a.total - b.total);
+    }
+
+    return ordenados;
+  }, [pedidosFiltrados, ordenFecha, ordenPrecio]);
 
   const resumenFiltrado = pedidos.filter((p) => {
     return (

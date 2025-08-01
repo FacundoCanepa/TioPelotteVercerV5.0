@@ -57,7 +57,6 @@ export function useIngredientesAdmin() {
 
       setIngredientes(ingredientes);
     } catch (error) {
-      console.error("❌ Error cargando ingredientes:", error);
       toast.error("Error al cargar ingredientes");
     } finally {
       setLoading(false);
@@ -80,8 +79,6 @@ export function useIngredientesAdmin() {
         documentId: isNew ? generateSlug(form.nombre) : form.documentId,
       };
 
-      console.log("📝 Guardando ingrediente:", payload);
-
       const url = isNew
         ? "/api/admin/ingredients"
         : `/api/admin/ingredients/${form.documentId}`;
@@ -99,15 +96,12 @@ export function useIngredientesAdmin() {
       setShowForm(false);
       fetchIngredientes();
     } catch (error) {
-      console.error("❌ Error al guardar ingrediente:", error);
       toast.error("Error al guardar ingrediente");
     }
   };
 
   const deleteIngrediente = async (documentId: string) => {
     try {
-      console.log("🗑️ Eliminando ingrediente con documentId:", documentId);
-
       const res = await fetch(`/api/admin/ingredients/${documentId}`, {
         method: "DELETE",
       });
@@ -117,14 +111,11 @@ export function useIngredientesAdmin() {
       toast.success("Ingrediente eliminado");
       fetchIngredientes();
     } catch (error) {
-      console.error("❌ Error al eliminar:", error);
       toast.error("Error al eliminar");
     }
   };
 
   const editIngrediente = (i: IngredientType) => {
-    console.log("✏️ Editando ingrediente:", i);
-
     setForm({
       id: i.id,
       nombre: i.nombre,
@@ -138,7 +129,6 @@ export function useIngredientesAdmin() {
   };
 
   const startNew = () => {
-    console.log("➕ Nuevo ingrediente");
     setForm({
       nombre: "",
       stock: 0,

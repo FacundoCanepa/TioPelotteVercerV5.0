@@ -9,7 +9,6 @@ export async function GET() {
     });
 
     const usuarios = await res.json();
-    console.log("👤 Usuarios obtenidos:", usuarios);
 
     return NextResponse.json({ data: usuarios });
   } catch (error) {

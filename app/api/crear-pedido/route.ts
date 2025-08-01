@@ -9,9 +9,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Error";
+    const message = error instanceof Error ? error.message : "Error interno al crear pedido";
     return NextResponse.json(
-      { error: message || "Error interno al crear pedido" },
+      { error: message },
       { status: 500 }
     );
   }

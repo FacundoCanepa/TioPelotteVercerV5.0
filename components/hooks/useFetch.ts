@@ -40,7 +40,7 @@ export function useFetch<T>(
         const json = await res.json();
         const value = transform ? transform(json) : json.data ?? json;
         setData(value);
-      } catch (err: unknown) {
+      } catch (err) {
         if (err instanceof Error && err.name !== "AbortError") {
           setError(err.message || "Error al cargar datos");
         }
@@ -56,7 +56,6 @@ export function useFetch<T>(
     return () => {
       controller.abort();
     };
-  }, [url, options, transform]);
-
+  }, [url, JSON.stringify(options), transform]);
   return { data, loading, error };
 }

@@ -47,7 +47,6 @@ export async function PUT(req: NextRequest, context: RouteParams) {
 
     return NextResponse.json(data, { status: res.status });
   } catch (error) {
-    console.error("❌ Error en PUT /api/admin/products/[id]:", error);
     return NextResponse.json(
       { error: "Error interno del servidor" },
       { status: 500 }
@@ -75,7 +74,6 @@ export async function DELETE(req: NextRequest, context: RouteParams) {
 
     return NextResponse.json(data, { status: res.status });
   } catch (error) {
-    console.error("❌ Error en DELETE /api/admin/products/[id]:", error);
     return NextResponse.json(
       { error: "Error interno del servidor" },
       { status: 500 }

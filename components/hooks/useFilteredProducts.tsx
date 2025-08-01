@@ -85,7 +85,8 @@ export function useFilteredProducts() {
   }, [filters, allProducts]);
 
   useEffect(() => {
-    filterProducts();
+    const cleanup = filterProducts();
+    return cleanup;
   }, [filterProducts]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;

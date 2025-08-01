@@ -196,8 +196,6 @@ export function useProductAdmin() {
       setEditingId(null);
       setForm(defaultForm());
       fetchProductos();
-    } catch (err) {
-      console.error("❌ Error en saveProducto:", err);
       toast.error("Error al guardar el producto");
     }
   };
@@ -242,7 +240,6 @@ export function useProductAdmin() {
       toast.success("Producto eliminado");
       fetchProductos();
     } catch (err) {
-      console.error("Error deleting product:", err);
       toast.error("Error al eliminar");
     }
   };

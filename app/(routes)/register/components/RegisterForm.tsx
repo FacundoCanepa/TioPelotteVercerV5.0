@@ -30,7 +30,6 @@ export default function RegisterForm() {
       });
 
       const data = await res.json();
-      console.log("Respuesta registro:", data); // Debug
 
       if (!res.ok) {
         const mensaje = data?.error?.message || "";
@@ -47,7 +46,7 @@ export default function RegisterForm() {
       setUser({ ...data.user, role: roleName });
       setJwt(data.jwt);
       router.push("/");
-    } catch (err: unknown) {
+    } catch (err) {
       if (err instanceof Error) setError(err.message);
       else setError("Ocurrió un error desconocido.");
     } finally {

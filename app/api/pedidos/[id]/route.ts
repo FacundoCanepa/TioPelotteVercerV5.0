@@ -31,7 +31,6 @@ export async function PUT(req: NextRequest, context: RouteParams) {
 
     return NextResponse.json(json);
   } catch (err) {
-    console.error("❌ Error en PUT /api/pedidos/[id]:", err);
     return NextResponse.json({ error: "Error interno del servidor" }, { status: 500 });
   }
 }

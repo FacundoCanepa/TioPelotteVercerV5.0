@@ -11,9 +11,6 @@ export async function PUT(req: NextRequest, context: RouteParams) {
   try {
     const { id } = await context.params;
     const body = await req.json();
-    
-    console.log("📥 PUT recibido body:", body);
-    console.log("🆔 Params (documentId):", id);
 
     const data = {
       ingredienteName: body.ingredienteName,
@@ -32,10 +29,8 @@ export async function PUT(req: NextRequest, context: RouteParams) {
     });
 
     const json = await res.json();
-    console.log("✅ Respuesta PUT:", json);
     return NextResponse.json(json, { status: res.status });
   } catch (error) {
-    console.error("🔥 Error en PUT:", error);
     return NextResponse.json(
       { error: "Error interno del servidor" },
       { status: 500 }
@@ -46,7 +41,6 @@ export async function PUT(req: NextRequest, context: RouteParams) {
 export async function DELETE(req: NextRequest, context: RouteParams) {
   try {
     const { id } = await context.params;
-    console.log("🗑️ DELETE recibido para:", id);
 
     const res = await fetch(`${backend}/api/ingredientes/${id}`, {
       method: "DELETE",
@@ -56,15 +50,12 @@ export async function DELETE(req: NextRequest, context: RouteParams) {
     });
 
     if (res.status === 204) {
-      console.log("✅ Ingrediente eliminado correctamente");
       return new Response(null, { status: 204 });
     }
 
     const json = await res.json();
-    console.log("⚠️ Respuesta DELETE (no 204):", json);
     return NextResponse.json(json, { status: res.status });
   } catch (error) {
-    console.error("🔥 Error en DELETE:", error);
     return NextResponse.json(
       { error: "Error interno del servidor" },
       { status: 500 }

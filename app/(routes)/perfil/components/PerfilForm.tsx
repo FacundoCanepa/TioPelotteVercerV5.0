@@ -44,6 +44,7 @@ export default function PerfilForm({ userId, jwt }: Props) {
           referencias: data.referencias || "",
         });
       } catch (error) {
+        // Error handling for user fetch
       } finally {
         setLoading(false);
       }

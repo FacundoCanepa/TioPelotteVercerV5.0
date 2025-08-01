@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
     const data = await res.json();
     return NextResponse.json(data, { status: res.status });
   } catch (error) {
-    console.error("Error en POST /api/upload:", error);
     return NextResponse.json({ error: "Error al subir la imagen" }, { status: 500 });
   }
 }

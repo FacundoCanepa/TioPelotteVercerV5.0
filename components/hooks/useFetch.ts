@@ -10,33 +10,53 @@ export function useFetch<T>(
   url?: string,
   options?: RequestInit,
   transform?: (json: any) => T
-) : FetchState<T> {
+): FetchState<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(!!url);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    if (!url) return;
+    if (!url) {
+      setLoading(false);
+      return;
+    }
+
     const controller = new AbortController();
+    
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await fetch(url, { ...options, signal: controller.signal });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        setError("");
+        
+        const res = await fetch(url, { 
+          ...options, 
+          signal: controller.signal 
+        });
+        
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
         const json = await res.json();
         const value = transform ? transform(json) : json.data ?? json;
         setData(value);
-      } catch (err: any) {
-        if (err.name !== "AbortError") {
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name !== "AbortError") {
           setError(err.message || "Error al cargar datos");
         }
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
+
     fetchData();
-    return () => controller.abort();
-  }, [url]);
+    
+    return () => {
+      controller.abort();
+    };
+  }, [url, options, transform]);
 
   return { data, loading, error };
 }

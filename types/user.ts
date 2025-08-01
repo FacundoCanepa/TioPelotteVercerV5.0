@@ -1,13 +1,15 @@
 import { PedidoType } from "./pedido";
 
-export type UserType = {
+export interface UserType {
   id: number;
   username: string;
   email: string;
-  jwt: string;
+  role?: string;
   telefono?: string;
   zona?: string;
   direccion?: string;
   referencias?: string;
+  createdAt?: string;
+  updatedAt?: string;
   pedidos?: PedidoType[];
-};
+}

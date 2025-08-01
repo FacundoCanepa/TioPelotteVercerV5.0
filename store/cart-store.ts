@@ -1,18 +1,22 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type CartItem = {
+export interface CartItem {
   product: {
     id: number;
     productName: string;
     price: number;
-    img: any;
+    img: {
+      id: number;
+      url: string;
+    }[];
     unidadMedida: string;
+    descriptionCorta?: string;
   };
   quantity: number;
-};
+}
 
-export type CartStore = {
+export interface CartStore {
   cart: CartItem[];
   tipoEntrega: "domicilio" | "local" | null;
   zona: string;
@@ -32,14 +36,14 @@ export type CartStore = {
   setZona: (zona: string) => void;
   setDireccion: (direccion: string) => void;
   setReferencias: (referencias: string) => void;
-  setTipoPago: (tipo: "mercado pago" | "efectivo") => void;
+  setTipoPago: (tipo: "mercado pago" | "efectivo" | "Elegís al momento de pagar") => void;
   setTotal: (total: number) => void;
   setNombre: (nombre: string) => void;
   setTelefono: (telefono: string) => void;
 
-  getTotalPrice: () => number; 
+  getTotalPrice: () => number;
   getTotalItems: () => number;
-};
+}
 
 export const useCartStore = create<CartStore>()(
   persist(
@@ -82,7 +86,7 @@ export const useCartStore = create<CartStore>()(
       clearCart: () =>
         set({
           cart: [],
-          tipoEntrega: null,
+          tipoEntrega: "domicilio",
           zona: "",
           direccion: "",
           referencias: "",

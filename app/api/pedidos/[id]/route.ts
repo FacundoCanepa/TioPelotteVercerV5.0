@@ -1,13 +1,12 @@
-// app/api/pedidos/[id]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: Record<string, string> }
-) {
-  const documentId = params.id;
+interface RouteParams {
+  params: Promise<{ id: string }>;
+}
 
+export async function PUT(req: NextRequest, context: RouteParams) {
   try {
+    const { id: documentId } = await context.params;
     const body = await req.json();
 
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -32,6 +31,7 @@ export async function PUT(
 
     return NextResponse.json(json);
   } catch (err) {
+    console.error("❌ Error en PUT /api/pedidos/[id]:", err);
     return NextResponse.json({ error: "Error interno del servidor" }, { status: 500 });
   }
 }

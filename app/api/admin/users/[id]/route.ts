@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const id = params.id;
+interface RouteParams {
+  params: Promise<{ id: string }>;
+}
 
+export async function PUT(req: NextRequest, context: RouteParams) {
   try {
+    const { id } = await context.params;
     const body = await req.json();
 
     const {

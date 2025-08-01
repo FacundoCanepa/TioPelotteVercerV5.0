@@ -3,13 +3,15 @@ import { NextRequest, NextResponse } from "next/server";
 const backend = process.env.NEXT_PUBLIC_BACKEND_URL!;
 const token = process.env.STRAPI_PEDIDOS_TOKEN!;
 
-export async function PUT(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
-  const { id } = await context.params; 
+interface RouteParams {
+  params: Promise<{ id: string }>;
+}
+
+export async function PUT(req: NextRequest, context: RouteParams) {
   try {
+    const { id } = await context.params;
     const body = await req.json();
+    
     console.log("📥 PUT recibido body:", body);
     console.log("🆔 Params (documentId):", id);
 
@@ -41,12 +43,9 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
-  const { id } = await context.params;
+export async function DELETE(req: NextRequest, context: RouteParams) {
   try {
+    const { id } = await context.params;
     console.log("🗑️ DELETE recibido para:", id);
 
     const res = await fetch(`${backend}/api/ingredientes/${id}`, {

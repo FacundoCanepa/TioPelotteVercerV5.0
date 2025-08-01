@@ -2,13 +2,13 @@
 
 import SkeletonCategory from "../../ui/SkeletonCategory";
 import { useGetCategory } from "@/components/hooks/useGetCategory";
-import { ResponseType } from "@/types/response";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import type { Category } from "@/types/category";
 
 const CategoryHome = () => {
-  const { loading, result } = useGetCategory() as ResponseType;
+  const { loading, result, error } = useGetCategory();
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const router = useRouter();
 
@@ -24,6 +24,25 @@ const CategoryHome = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-center font-garamond text-[4vh] md:text-[6vh] sm:pb-1 italic tracking-wide">
+          ¿Qué te gustaría disfrutar hoy?
+        </h2>
+        <SkeletonCategory />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p className="text-red-600">Error al cargar categorías: {error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 className="text-center font-garamond text-[4vh] md:text-[6vh] sm:pb-1 italic tracking-wide">
@@ -34,17 +53,14 @@ const CategoryHome = () => {
       </p>
 
       <div className="flex overflow-x-auto rounded-xl h-[400px] lg:h-[400px]">
-        {loading ? (
-          <SkeletonCategory />
-        ) : (
-          result &&
-          result.map((category) => {
-            const isExpandedMobile = expandedId === category.id;
+        {result && result.length > 0 ? (
+          result.map((category: Category) => {
+            const isExpandedMobile = expandedId === String(category.id);
 
             return (
               <div
                 key={category.id}
-                onClick={() => handleClick(category.id, category.slug)}
+                onClick={() => handleClick(String(category.id), category.slug)}
                 className={`
                   group relative flex-shrink-0 cursor-pointer
                   overflow-hidden 
@@ -79,6 +95,10 @@ const CategoryHome = () => {
               </div>
             );
           })
+        ) : (
+          <div className="w-full flex items-center justify-center">
+            <p className="text-stone-600">No hay categorías disponibles</p>
+          </div>
         )}
       </div>
     </div>

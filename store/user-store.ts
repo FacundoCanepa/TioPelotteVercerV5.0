@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type UserType = {
+export interface UserType {
   id: number;
   email: string;
   username: string;
@@ -10,8 +10,7 @@ type UserType = {
   zona?: string;
   direccion?: string;
   referencias?: string;
-};
-
+}
 
 interface UserState {
   user: UserType | null;
@@ -38,7 +37,9 @@ export const useUserStore = create<UserState>()(
       name: "user-storage",
       partialize: (state) => ({ user: state.user, jwt: state.jwt }),
       onRehydrateStorage: () => (state) => {
-        state?.setIsSessionChecked(true);
+        if (state) {
+          state.setIsSessionChecked(true);
+        }
       },
     }
   )

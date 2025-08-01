@@ -1,9 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { IngredientType } from "@/types/ingredient";
 import { toast } from "sonner";
 import { generateSlug } from "@/lib/utils";
+
+interface IngredientForm {
+  id?: number;
+  nombre: string;
+  stock: number;
+  unidadMedida: string;
+  precio: number;
+  documentId?: string;
+}
 
 export function useIngredientesAdmin() {
   const [ingredientes, setIngredientes] = useState<IngredientType[]>([]);
@@ -19,7 +28,7 @@ export function useIngredientesAdmin() {
   });
 
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState<any>({
+  const [form, setForm] = useState<IngredientForm>({
     nombre: "",
     stock: 0,
     unidadMedida: "kg",
@@ -28,38 +37,36 @@ export function useIngredientesAdmin() {
 
   const unidades = ["kg", "planchas", "unidad"];
 
-const fetchIngredientes = async () => {
-  try {
-    const res = await fetch("/api/admin/ingredients");
-    const json = await res.json();
+  const fetchIngredientes = useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/ingredients");
+      const json = await res.json();
 
-    const data = Array.isArray(json.data) ? json.data : [];
+      const data = Array.isArray(json.data) ? json.data : [];
 
-    const ingredientes = data.map((i: any) => ({
-      id: i.id,
-      documentId: i.documentId,
-      nombre: i.ingredienteName,
-      stock: i.Stock,
-      unidadMedida: i.unidadMedida,
-      precio: i.precio,
-      stockUpdatedAt: i.stockUpdatedAt,
-      updatedAt: i.updatedAt, 
-    }));
+      const ingredientes = data.map((i: any) => ({
+        id: i.id,
+        documentId: i.documentId,
+        nombre: i.ingredienteName,
+        stock: i.Stock,
+        unidadMedida: i.unidadMedida,
+        precio: i.precio,
+        stockUpdatedAt: i.stockUpdatedAt,
+        updatedAt: i.updatedAt,
+      }));
 
-
-    setIngredientes(ingredientes);
-  } catch (error) {
-    console.error("❌ Error cargando ingredientes:", error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-
+      setIngredientes(ingredientes);
+    } catch (error) {
+      console.error("❌ Error cargando ingredientes:", error);
+      toast.error("Error al cargar ingredientes");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     fetchIngredientes();
-  }, []);
+  }, [fetchIngredientes]);
 
   const saveIngrediente = async () => {
     try {
@@ -82,6 +89,7 @@ const fetchIngredientes = async () => {
 
       const res = await fetch(url, {
         method,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
@@ -129,7 +137,6 @@ const fetchIngredientes = async () => {
     setShowForm(true);
   };
 
-
   const startNew = () => {
     console.log("➕ Nuevo ingrediente");
     setForm({
@@ -141,21 +148,32 @@ const fetchIngredientes = async () => {
     setShowForm(true);
   };
 
-  return {
-    ingredientes: ingredientes
-      .filter((i) =>
-        i.nombre.toLowerCase().includes(search.toLowerCase())
-      )
-      .filter((i) => (filterUnidad === "all" ? true : i.unidadMedida === filterUnidad))
-      .filter((i) => (filterLowStock ? i.stock <= 5 : true))
-      .sort((a, b) => {
-        const aValue = a[orderBy.field as keyof IngredientType];
-        const bValue = b[orderBy.field as keyof IngredientType];
-        if (aValue < bValue) return orderBy.direction === "asc" ? -1 : 1;
-        if (aValue > bValue) return orderBy.direction === "asc" ? 1 : -1;
-        return 0;
-      }),
+  const filteredIngredientes = ingredientes
+    .filter((i) =>
+      i.nombre.toLowerCase().includes(search.toLowerCase())
+    )
+    .filter((i) => (filterUnidad === "all" ? true : i.unidadMedida === filterUnidad))
+    .filter((i) => (filterLowStock ? i.stock <= 5 : true))
+    .sort((a, b) => {
+      const aValue = a[orderBy.field as keyof IngredientType];
+      const bValue = b[orderBy.field as keyof IngredientType];
+      
+      if (typeof aValue === "number" && typeof bValue === "number") {
+        return orderBy.direction === "asc" ? aValue - bValue : bValue - aValue;
+      }
+      
+      const aStr = String(aValue || "");
+      const bStr = String(bValue || "");
+      
+      if (orderBy.direction === "asc") {
+        return aStr.localeCompare(bStr);
+      } else {
+        return bStr.localeCompare(aStr);
+      }
+    });
 
+  return {
+    ingredientes: filteredIngredientes,
     loading,
     search,
     setSearch,

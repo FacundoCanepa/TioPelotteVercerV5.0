@@ -21,7 +21,7 @@ export default function MercadoPagoButton({ total }: Props) {
         title: `${item.product.productName} · ${item.quantity} ${item.product.unidadMedida}`,
         quantity: 1,
         unit_price: Math.round(item.quantity * item.product.price),
-        productName: item.product.productName,
+        product_name: item.product.productName,
       }));
 
 
@@ -33,7 +33,7 @@ export default function MercadoPagoButton({ total }: Props) {
             title: "Envío a domicilio",
             quantity: 1 ,
             unit_price: costoEnvio,
-            productName: undefined ,
+            product_name: undefined ,
           });
         }
       }

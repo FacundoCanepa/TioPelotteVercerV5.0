@@ -75,10 +75,10 @@ export default function CheckoutPage() {
 
       const payload = {
         items: cart.map((item) => ({
-        title: `${item.product.productName} · ${item.quantity} ${item.product.unidadMedida}`,
+          title: `${item.product.productName} · ${item.quantity} ${item.product.unidadMedida}`,
           quantity: 1,
           unit_price: Math.round(item.quantity * item.product.price),
-          product_name: item.product.productName,
+          productName: item.product.productName,
         })),
         total: totalGeneral,
         estado: "Pendiente",
@@ -92,7 +92,7 @@ export default function CheckoutPage() {
       };
 
 
-  try {
+    try {
     const res = await fetch("/api/crear-pedido", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -110,7 +110,7 @@ export default function CheckoutPage() {
   } catch (error) {
     setError("Ocurrió un error al confirmar el pedido. Intentalo de nuevo.");
   }
-};
+  };
 
 
 

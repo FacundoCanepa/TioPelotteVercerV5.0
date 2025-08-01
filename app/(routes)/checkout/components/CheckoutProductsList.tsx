@@ -40,10 +40,14 @@ export default function CheckoutProductsList() {
           {/* Imagen */}
           <div className="w-20 h-20 relative shrink-0">
             <Image
-              src={item.product.img?.[0]?.url || "/placeholder.jpg"}
+              src={item.product.img?.[0]?.url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
               alt={item.product.productName}
               fill
               className="object-cover rounded-md"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+              }}
             />
           </div>
 

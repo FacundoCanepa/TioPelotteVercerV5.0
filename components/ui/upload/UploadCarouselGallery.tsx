@@ -51,7 +51,17 @@ export default function UploadCarouselGallery({ values, previews, onChange, uplo
         <div className="flex flex-wrap gap-2 mt-2">
           {previews.map((src, idx) => (
             <div key={idx} className="relative">
-              <Image src={src} alt={`img-${idx}`} width={80} height={80} className="object-cover rounded-md h-20 w-20" />
+              <Image 
+                src={src || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSJ0cmFuc3BhcmVudCIvPgo8L3N2Zz4K"} 
+                alt={`img-${idx}`} 
+                width={80} 
+                height={80} 
+                className="object-cover rounded-md h-20 w-20"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSJ0cmFuc3BhcmVudCIvPgo8L3N2Zz4K";
+                }}
+              />
               <button
                 type="button"
                 onClick={() => remove(idx)}

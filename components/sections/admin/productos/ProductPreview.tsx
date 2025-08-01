@@ -13,11 +13,15 @@ export default function ProductPreview({ product }: { product: Partial<ProductTy
         {product.imgPreview && (
           <div className="flex-shrink-0 w-full md:w-52">
             <Image
-              src={product.imgPreview}
+              src={product.imgPreview || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
               alt={product.productName}
               width={300}
               height={300}
               className="rounded-lg object-cover w-full h-40"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+              }}
             />
           </div>
         )}
@@ -36,7 +40,18 @@ export default function ProductPreview({ product }: { product: Partial<ProductTy
          {product.img_carousel_preview && product.img_carousel_preview.length > 0 && (
         <div className="flex gap-2 flex-wrap pt-4">
           {product.img_carousel_preview.map((src, idx) => (
-            <Image key={idx} src={src} alt={`${product.productName}-${idx}`} width={80} height={80} className="h-20 w-20 object-cover rounded" />
+            <Image 
+              key={idx} 
+              src={src || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSJ0cmFuc3BhcmVudCIvPgo8L3N2Zz4K"} 
+              alt={`${product.productName}-${idx}`} 
+              width={80} 
+              height={80} 
+              className="h-20 w-20 object-cover rounded"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSJ0cmFuc3BhcmVudCIvPgo8L3N2Zz4K";
+              }}
+            />
           ))}
         </div>
       )}

@@ -96,10 +96,14 @@ export default function RecipeDetail({ slug }: Props) {
             className="relative h-[300px] w-full rounded-xl overflow-hidden shadow-xl"
           >
             <Image
-              src={receta.img.url}
+              src={receta.img.url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
               alt={receta.titulo}
               fill
               className="object-cover object-center"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+              }}
             />
           </motion.div>
         )}
@@ -150,10 +154,14 @@ export default function RecipeDetail({ slug }: Props) {
                 {product.img[0]?.url && (
                   <div className="relative h-44 w-full overflow-hidden">
                     <Image
-                      src={product.img[0].url}
+                      src={product.img[0].url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
                       alt={product.productName}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+                      }}
                     />
                   </div>
                 )}

@@ -98,7 +98,7 @@ const fetchIngredientes = async () => {
 
   const deleteIngrediente = async (documentId: string) => {
     try {
-     console.log("🗑️ Eliminando ingrediente con documentId:", documentId);
+      console.log("🗑️ Eliminando ingrediente con documentId:", documentId);
 
       const res = await fetch(`/api/admin/ingredients/${documentId}`, {
         method: "DELETE",
@@ -114,20 +114,20 @@ const fetchIngredientes = async () => {
     }
   };
 
-const editIngrediente = (i: IngredientType) => {
-  console.log("✏️ Editando ingrediente:", i);
+  const editIngrediente = (i: IngredientType) => {
+    console.log("✏️ Editando ingrediente:", i);
 
-  setForm({
-    id: i.id,
-    nombre: i.nombre,
-    stock: i.stock,
-    unidadMedida: i.unidadMedida,
-    precio: i.precio,
-    documentId: i.documentId,
-  });
+    setForm({
+      id: i.id,
+      nombre: i.nombre,
+      stock: i.stock,
+      unidadMedida: i.unidadMedida,
+      precio: i.precio,
+      documentId: i.documentId,
+    });
 
-  setShowForm(true);
-};
+    setShowForm(true);
+  };
 
 
   const startNew = () => {

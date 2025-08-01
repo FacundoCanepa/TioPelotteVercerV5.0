@@ -41,7 +41,17 @@ export default function UploadImageMain({ value, preview, onChange, uploadImages
         onChange={(e) => e.target.files && handleFiles(e.target.files)}
       />
       {preview && (
-        <Image src={preview} alt="preview" width={300} height={300} className="rounded-md object-cover h-40 w-full" />
+        <Image 
+          src={preview || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="} 
+          alt="preview" 
+          width={300} 
+          height={300} 
+          className="rounded-md object-cover h-40 w-full"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+          }}
+        />
       )}
     </div>
   );

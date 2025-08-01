@@ -10,12 +10,16 @@ export default function NotFound() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#FBE6D4] text-[#8B4513] px-6">
       <div className="mb-8 flex flex-col items-center">
         <Image
-          src={imageNotFound}
+          src={imageNotFound || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
           alt="Tío Pelotte buscando la página"
           width={300}
           height={300}
           className="mb-4"
           priority
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+          }}
         />
         <h1 className="text-4xl sm:text-5xl font-garamond font-bold mb-4 text-center">
           Ni el Tío Pelotte encontró esta página...

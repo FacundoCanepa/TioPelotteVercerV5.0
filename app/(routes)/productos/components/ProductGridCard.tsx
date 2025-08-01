@@ -56,11 +56,15 @@ const ProductGridCard = ({ product }: Props) => {
             </span>
           )}
           <Image
-            src={product.img?.[0]?.url || "/placeholder.jpg"}
+            src={product.img?.[0]?.url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
             alt={product.productName}
             width={300}
             height={300}
             className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+            }}
           />
         </div>
 

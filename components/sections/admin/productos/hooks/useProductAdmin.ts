@@ -240,12 +240,20 @@ const { uploadImages, loading: uploading } = useImageUpload();
 
   const sorted = [...filtered].sort((a, b) => {
     const dir = orderBy.direction === "asc" ? 1 : -1;
-    if (orderBy.field === "price" || orderBy.field === "stock") {
-      return (a[orderBy.field] as number) > (b[orderBy.field] as number)
+    if (orderBy.field === "price" || orderBy.field === "stock" || orderBy.field === "updatedAt") {
+      const aValue = orderBy.field === "updatedAt" 
+        ? new Date(a[orderBy.field] || 0).getTime()
+        : (a[orderBy.field] as number) || 0;
+      const bValue = orderBy.field === "updatedAt"
+        ? new Date(b[orderBy.field] || 0).getTime() 
+        : (b[orderBy.field] as number) || 0;
+      return aValue > bValue
         ? dir
         : -dir;
     }
-    return a[orderBy.field].localeCompare(b[orderBy.field]) * dir;
+    const aField = a[orderBy.field as keyof ProductType] || "";
+    const bField = b[orderBy.field as keyof ProductType] || "";
+    return String(aField).localeCompare(String(bField)) * dir;
   });
 
   return {

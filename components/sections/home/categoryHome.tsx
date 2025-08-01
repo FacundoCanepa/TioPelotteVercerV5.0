@@ -55,10 +55,14 @@ const CategoryHome = () => {
                 `}
               >
                 <Image
-                  src={`${category.mainImage.url}`}
+                  src={category.mainImage?.url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
                   alt={category.categoryNames}
                   fill
                   className="absolute inset-0 object-cover scale-110 group-hover:scale-100 transition-transform duration-500"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
                 <div

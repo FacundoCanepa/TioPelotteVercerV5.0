@@ -18,7 +18,16 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 left-0 w-full flex items-center justify-between py-3 md:py-0 md:px-5 shadow-md z-50 navbar-secondary bg-white/90 backdrop-blur-sm">
       <div className="hidden md:flex size-[6vw] relative">
-        <Image src="/favicon.ico" alt="Tio Pelotte Icon" fill className="object-contain" />
+        <Image 
+          src="/favicon.ico" 
+          alt="Tio Pelotte Icon" 
+          fill 
+          className="object-contain"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.style.display = 'none';
+          }}
+        />
       </div>
 
       <div className="flex flex-col items-start space-y-2">

@@ -69,7 +69,7 @@ const CaroseText = () => {
               <div
                 className="h-[20vh] md:h-[25vh] bg-cover bg-center relative"
                 style={{
-                  backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_URL}${img})`,
+                  backgroundImage: `url(${process.env.NEXT_PUBLIC_MEDIA_URL}${img || ""})`,
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-0" />

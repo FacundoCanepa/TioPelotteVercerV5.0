@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
   images: {
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 60,
     remotePatterns: [
       {
         protocol: 'https',
@@ -10,8 +15,12 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   devIndicators: false, // ✅ Oculta indicadores de desarrollo
+  poweredByHeader: false,
+  compress: true,
 };
 
 module.exports = nextConfig;

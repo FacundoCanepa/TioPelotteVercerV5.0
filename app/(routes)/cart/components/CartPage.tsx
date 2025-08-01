@@ -60,11 +60,15 @@ export default function CartPage() {
             className="bg-white/40 rounded-xl shadow-lg flex flex-col md:flex-row items-center gap-4 p-5 border border-[#E0E0E0] transition-transform hover:scale-[1.01]"
           >
             <Image
-              src={item.product.img?.[0]?.url || "/placeholder.jpg"}
+              src={item.product.img?.[0]?.url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
               alt={item.product.productName}
               width={100}
               height={100}
               className="rounded-md object-cover w-24 h-24"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+              }}
             />
             <div className="flex-1 w-full">
               <h2 className="font-garamond text-lg text-[#5A3E1B]">{item.product.productName}</h2>

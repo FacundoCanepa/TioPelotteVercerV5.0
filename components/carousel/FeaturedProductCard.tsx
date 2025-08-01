@@ -49,10 +49,14 @@ const FeaturedProductCard = ({ product }: Props) => {
           }}
         >
           <Image
-            src={product.img?.[0]?.url}
+            src={product.img?.[0]?.url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
             alt={product.productName}
             fill
             className="object-cover object-center transition-transform duration-500 ease-in-out group-hover:scale-105"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+            }}
           />
           {expanded && (
             <div className="absolute top-2 right-2 md:hidden">

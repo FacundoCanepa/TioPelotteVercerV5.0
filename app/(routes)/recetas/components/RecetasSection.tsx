@@ -62,11 +62,15 @@ const RecetasSection = () => {
 
                 <div className="w-full lg:w-1/2 relative h-[250px] sm:h-[400px]">
                   <Image
-                    src={receta.img?.url || "/no-image.jpg"}
+                    src={receta.img?.url || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4="}
                     alt={receta.titulo}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idHJhbnNwYXJlbnQiLz48L3N2Zz4=";
+                    }}
                   />
                 </div>
               </motion.div>

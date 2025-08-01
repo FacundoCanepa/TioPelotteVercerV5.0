@@ -42,11 +42,15 @@ const CommentsUser = () => {
               className="flex items-start gap-4 bg-white/20 p-4 rounded-xl backdrop-blur-sm"
             >
               <Image
-                src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${review.avatar}`}
+                src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${review.avatar}` || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9InRyYW5zcGFyZW50Ii8+Cjwvc3ZnPgo="}
                 alt={review.name}
                 width={48}
                 height={48}
                 className="w-12 h-12 rounded-full object-cover border-2 border-black/90"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9InRyYW5zcGFyZW50Ii8+Cjwvc3ZnPgo=";
+                }}
               />
               <div className="flex-1">
                 <div className="flex items-center justify-between">
